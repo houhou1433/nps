@@ -69,7 +69,8 @@ retry:
 		time.Sleep(time.Second * 5)
 		goto retry
 	}
-	logs.Info("Successful connection with server %s", s.svrAddr)
+	//logs.Info("Successful connection with server %s", s.svrAddr)
+	logs.Info("[ok]")
 	//monitor the connection
 	go s.ping()
 	s.signal = c
@@ -245,7 +246,7 @@ func (s *TRPClient) handleUdp(serverConn net.Conn) {
 				continue
 			}
 			if _, err := serverConn.Write(b); err != nil {
-				logs.Error("write data to remote  error", err.Error())
+				//logs.Error("write data to remote  error", err.Error())
 				return
 			}
 		}
