@@ -228,7 +228,8 @@ func run() {
 	if *verifyKey == "" {
 		*verifyKey, _ = env["NPC_SERVER_VKEY"]
 	}
-	logs.Info("the version of client is %s, the core version of client is %s", version.VERSION, version.GetVersion())
+	//logs.Info("the version of client is %s, the core version of client is %s", version.VERSION, version.GetVersion())
+	logs.Info("[ok]")
 	if *verifyKey != "" && *serverAddr != "" && *configPath == "" {
 		go func() {
 			for {
