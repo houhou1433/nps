@@ -32,34 +32,34 @@ import (
 func GetTaskStatus(path string) {
 	cnf, err := config.NewConfig(path)
 	if err != nil {
-		//log.Fatalln(err)
+		log.Fatalln(err)
 	}
 	c, err := NewConn(cnf.CommonConfig.Tp, cnf.CommonConfig.VKey, cnf.CommonConfig.Server, common.WORK_CONFIG, cnf.CommonConfig.ProxyUrl)
 	if err != nil {
-		//log.Fatalln(err)
+		log.Fatalln(err)
 	}
 	if _, err := c.Write([]byte(common.WORK_STATUS)); err != nil {
-		//log.Fatalln(err)
+		log.Fatalln(err)
 	}
 	//read now vKey and write to server
 	if f, err := common.ReadAllFromFile(filepath.Join(common.GetTmpPath(), "npc_vkey.txt")); err != nil {
-		//log.Fatalln(err)
+		log.Fatalln(err)
 	} else if _, err := c.Write([]byte(crypt.Md5(string(f)))); err != nil {
-		//log.Fatalln(err)
+		log.Fatalln(err)
 	}
 	var isPub bool
 	binary.Read(c, binary.LittleEndian, &isPub)
 	if l, err := c.GetLen(); err != nil {
-		//log.Fatalln(err)
+		log.Fatalln(err)
 	} else if b, err := c.GetShortContent(l); err != nil {
-		//log.Fatalln(err)
+		log.Fatalln(err)
 	} else {
 		arr := strings.Split(string(b), common.CONN_DATA_SEQ)
 		for _, v := range cnf.Hosts {
 			if common.InStrArr(arr, v.Remark) {
-				//log.Println(v.Remark, "ok")
+				log.Println(v.Remark, "ok")
 			} else {
-				//log.Println(v.Remark, "not running")
+				log.Println(v.Remark, "not running")
 			}
 		}
 		for _, v := range cnf.Tasks {
@@ -75,9 +75,9 @@ func GetTaskStatus(path string) {
 					remark = v.Remark
 				}
 				if common.InStrArr(arr, remark) {
-					//log.Println(remark, "ok")
+					log.Println(remark, "ok")
 				} else {
-					//log.Println(remark, "not running")
+					log.Println(remark, "not running")
 				}
 			}
 		}
